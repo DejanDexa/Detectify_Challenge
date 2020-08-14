@@ -56,7 +56,7 @@
 -   Make fluid images `img { max-width: 100%; height: auto; }`
 > If the image is displayed within a full width of the container resizing the container it will automatically resize the image to the maximum width available. This will allow images to be automatically scaled to fit the container size.
 -   Make responsive font
-> As a further improvement, the font can also be made in a responsive manner by using `em` units instead of `px` and use the parent container width so it can adapt uniformly to the screen client.
+> As a further improvement, the font can also be made in a responsive manner by using different units like `rem` instead of `px` and use the parent container width so it can adapt uniformly to the screen client.
 
 
 
