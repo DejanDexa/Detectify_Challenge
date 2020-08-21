@@ -11,7 +11,7 @@
 
 -  #### Build a landing page 
 	- [x] Desktop version
-	 - [ ] Mobile version
+	- [x] Mobile version
 
 -  #### Main navigation
 	- [x] Clicking solutions should open a drop-down menu
@@ -44,20 +44,9 @@
 
   
 -	####  Other requirements
-	 - [ ] The landing page needs to be responsive
+	- [x] The landing page needs to be responsive
 	- [x] The top navigation should work similar to the mobile and desktop designs provided 
 #
-
-## What should be improved or implemented
-**Next steps in order to improve this design to be adaptive and responsive to different screen sizes are:**
--   Add responsive meta tags in the HTML document
--   Apply Media queries `@media screen` for different screen sizes   
--   Changing the CSS style for the elements  
--   Make fluid images `img { max-width: 100%; height: auto; }`
-> If the image is displayed within a full width of the container resizing the container it will automatically resize the image to the maximum width available. This will allow images to be automatically scaled to fit the container size.
--   Make responsive font
-> As a further improvement, the font can also be made in a responsive manner by using different units like `rem` instead of `px` and use the parent container width so it can adapt uniformly to the screen client.
-
 
 
 
