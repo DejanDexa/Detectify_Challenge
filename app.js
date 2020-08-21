@@ -1,12 +1,21 @@
 "use strict";
 
-   let currentPage = 0;
-   let itemsPerPage = 3;
-   let lastIteration = 0;
-   let cardItems;
+    const BREAKPOINT = 968;
+    const DESKTOP_ITEMS_VISIBLE = 3;
+    const MOBILE_ITEMS_VISIBLE = 1;
+
+    let currentPage = 0;
+    let itemsPerPage;
+    let lastIteration = 0;
+    let cardItems = [];
+
+    window.addEventListener('resize', function() {
+        renderItems(paginate(cardItems, currentPage))
+    });
 
    //Function that will filter and select items
    function paginate(items, page) {
+        itemsPerPage = window.innerWidth < BREAKPOINT ? MOBILE_ITEMS_VISIBLE : DESKTOP_ITEMS_VISIBLE
         let start = itemsPerPage * page;
         let filterValue = document.getElementById('search').value
 
@@ -14,6 +23,8 @@
         let filteredItems = items.filter(item => 
                             item.title.toLowerCase().includes(filterValue.toLowerCase()) ||
                             item.description.toLowerCase().includes(filterValue.toLowerCase()) ||
+                            getCountryByName(item.country).toLowerCase().includes(filterValue.toLowerCase()) ||
+                            item.country.toLowerCase().includes(filterValue.toLowerCase()) ||
                             item.date.toLowerCase().includes(filterValue.toLowerCase()))
         
         //Filter items by active type filter (All, Online or Live)
@@ -21,9 +32,9 @@
         let elementOnlineFilter = document.getElementById("online");
         let filterType;
 
-        if (elementAllFilter.classList.contains('btn-warning')) {
+        if (elementAllFilter.classList.contains('selected')) {
             filterType = (item) => item.type.toLowerCase().includes('online') || item.type.toLowerCase().includes('live')
-        } else if (elementOnlineFilter.classList.contains('btn-warning')) {
+        } else if (elementOnlineFilter.classList.contains('selected')) {
             filterType = (item) => item.type.toLowerCase().includes('online')
         } else {
             filterType = (item) => item.type.toLowerCase().includes('live')
@@ -71,22 +82,24 @@
     //Function that will render items per iteration
     function renderItems (items) {
         let html = "";
-
+        const cardWidth = window.innerWidth < BREAKPOINT ? 10 : 3;
         if (items.length > 0) {
             for (let i = 0; i < items.length; i++) {
-                html += '<div class="card col-3 m-1 mx-auto shadow">' + 
+                const eventDate = new Date(items[i].date);
+
+                html += '<div class="card col-'+ cardWidth +' m-1 mx-auto shadow">' + 
                         '<div class="card-body">' +
-                            '<h6 class="card-info float-left">'+ items[i].date + '</h6>' +
+                            '<h6 class="card-info float-left"><span>'+ eventDate.getShortMonthName() + ' ' + eventDate.getDay() +'</span> '+ eventDate.getFullYear() + '</h6>' +
                             '<h6 class="card-date float-right">'+ items[i].country + '</h6>' +
                             '<hr class="mt-3 mb-3"/>' +
                             '<h5 class="card-title text-left">'+ items[i].title +'</h5>' +
                             '<p class="card-text"> '+ items[i].description +'</p>' + 
-                            '<a href="#" class="card-link float-right">Read more</a>' +
+                            '<a href="#" class="card-link">Read more  ➔</a>' +
                         '</div>' +
                       '</div>';
             }
         } else {
-            html = '<div class="card col-3 m-1 mx-auto shadow">' + 
+            html = '<div class="card col m-1 mx-auto shadow">' + 
                         '<div class="card-body">' +
                             '<h5 class="card-title text-left">Nope.</h5>' +
                             '<p class="card-text">No matches for that search. Sorry about that.</p>' +
@@ -100,9 +113,7 @@
     //Fetch json data
     function getData() {
         fetch("json/detectify-conf-events.json")
-        .then((res) => {
-            return res.json();
-        })
+        .then(async (res) => await res.json())
         .then((items) => {
             cardItems = items;
 
@@ -143,53 +154,67 @@
 
     let elementAll = document.getElementById("all");
     elementAll.addEventListener('click', function (e) {
-        toggleActiveFilter(elementAll)
-        setInactiveFilter(elementOnline)
-        setInactiveFilter(elementLive)
+        toggleFilter(this);
         currentPage = 0
         renderItems(paginate(cardItems, currentPage))
     });
 
     let elementOnline = document.getElementById("online");
     elementOnline.addEventListener('click', function () {
-        toggleActiveFilter(elementOnline)
-        setInactiveFilter(elementAll)
-        setInactiveFilter(elementLive)
+        toggleFilter(this);
         currentPage = 0
         renderItems(paginate(cardItems, currentPage))
     });
 
     let elementLive = document.getElementById("live");
     elementLive.addEventListener('click', function () {
-        toggleActiveFilter(elementLive)
-        setInactiveFilter(elementAll)
-        setInactiveFilter(elementOnline)
+        toggleFilter(this);
         currentPage = 0
         renderItems(paginate(cardItems, currentPage))
     });
 
-    function toggleActiveFilter(element) {
-        if (element.classList.contains('btn-warning')) {
-            element.classList.remove("btn-warning");
-            element.classList.add("btn-outline-secondary");
-        } else {
-            element.classList.add("btn-warning");
-            element.classList.remove("btn-outline-secondary");
-        }
+
+    //toggls the selected class when choosing a filter 
+    //and removes the current selected
+    function toggleFilter(element) {
+        const currentSelected = document.querySelector('.btn.selected');
+        
+        if(currentSelected !== element)
+            currentSelected.classList.remove('selected');
+        element.classList.toggle('selected');
+        
     }
 
-    function setInactiveFilter (element) {
-        if (element.classList.contains('btn-warning')) {
-            element.classList.remove("btn-warning");
-            element.classList.add("btn-outline-secondary");
-        }
+    //debounce menthod for scroll
+    function debounce(method, delay) {
+        clearTimeout(method._tId);
+        method._tId = setTimeout(function () {
+            method();
+        }, delay);   
     }
-
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 10) {
-            $('#nav-bar').addClass('shadow-sm');
+    
+    //attach class with shadow on scroll
+    function handleScroll() {
+        if (window.scrollY > 10) {
+            document.getElementById('nav-bar').classList.add('shadow-sm');
         } else {
-            $('#nav-bar').removeClass('shadow-sm');
+            document.getElementById('nav-bar').classList.remove('shadow-sm');
+        } 
+    }    
+    window.addEventListener("scroll", function () {
+        debounce(handleScroll, 30);
+    });
+
+    //attach class on the button +/x mobile version menu
+    const menuBtn = document.querySelector('.menu-btn');
+    let menuOpen = false;
+    menuBtn.addEventListener('click', () => {
+        if(!menuOpen) {
+            menuBtn.classList.add('open');
+            menuOpen = true;
+        } else {
+            menuBtn.classList.remove('open');
+            menuOpen = false;
         }
     });
     
@@ -206,6 +231,23 @@
     Date.prototype.getShortMonthName = function () {
         return this.getMonthName().substr(0, 3);
     };
+
+
+    let countryNames = {
+        "USA": "America",
+        "UK": "England",
+        "SE": "Sweden"
+    };
+
+    function getCountryByName (countryCode) {
+        if (countryNames.hasOwnProperty(countryCode)) {
+            return countryNames[countryCode];
+        } else {
+            return countryCode;
+        }
+    }
+
+    
 
     getData();
 

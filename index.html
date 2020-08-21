@@ -2,24 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Detectify</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <section id="nav-bar">
-    <nav class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
+    <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light navbar-fixed-top">
       <a class="navbar-brand" href="#"> <img src="logos/Vector.svg" alt=""></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="toggler"><img class="menu-btn" src="/icons/Menu-icon.svg" alt="Menu"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
@@ -31,23 +26,23 @@
           </li>
           <li class="nav-item dropdown position-static active">
             <a id="dropdown" class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false"> Solutions <img src="icons/chevron-down_24_dark.svg" alt="arrow"></a>
+              aria-haspopup="true" aria-expanded="false"> Solutions <img class="menu-btn" src="icons/chevron-down_24_dark.svg" alt="arrow"></a>
             <div class="dropdown-menu w-100 shadow rounded-0 border-top-1 border-bottom-0" aria-labelledby="navbarDropdown">
               <div class="sub-category">
-                <a class="dropdown-item" href="#">Sub cateogory</a>
+                <a class="dropdown-item-cat" href="#">Sub cateogory</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
               </div>
               <div class="sub-category">
-                <a class="dropdown-item" href="#">Sub cateogory</a>
+                <a class="dropdown-item-cat" href="#">Sub cateogory</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
               </div>
               <div class="sub-category">
-                <a class="dropdown-item" href="#">Sub cateogory</a>
+                <a class="dropdown-item-cat" href="#">Sub cateogory</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
                 <a class="dropdown-item" href="#">Navigation Item</a>
@@ -60,11 +55,10 @@
         </div>
       </div>
     </nav>
-  </section>
 
   <section id="masthead">
     <div class="masthead-container">
-      <div>
+      <div class="masthead-text">
         <h1 class="masthead-h">Automated penetration testing powered by ethical hackers</h1>
         <p class="masthead-p">One morning, as a Gregor Samsa was waking up from anxious dreams,
           he discovered that in bed he had been changed into a monstrous
@@ -75,8 +69,8 @@
           <img src="icons/arrow-right_34_white.svg" alt="start your journey"> </i></button>
       </div>
       <div class="masthead-img">
-        <img src="images/employee.png" alt="img">
-        <img src="images/shapes.svg" alt="img">
+        <img src="images/employee.png" alt="employee">
+        <img src="images/shapes.svg" alt="shapes">
       </div>
     </div>
   </section>
@@ -84,17 +78,27 @@
   <section id="logobar-id">
     <div class="logobar">
       <p class="logobar-text">Trust and ❤️ by:</p>
-      <img src="logos/spotify-logo.png" alt="img">
-      <img src="logos/trello-logo.png" alt="img">
-      <img src="logos/sbab-logo.png" alt="img">
-      <img src="logos/trustly-logo.png" alt="img">
+      <div class="all-logos">
+        <div class="logo-container">
+          <img src="logos/spotify-logo.png" alt="spotify">
+        </div>
+        <div class="logo-container">
+          <img src="logos/trello-logo.png" alt="trello">
+        </div>
+        <div class="logo-container">
+        <img src="logos/sbab-logo.png" alt="sbab">
+          
+        </div>
+        <div class="logo-container">
+          <img src="logos/trustly-logo.png" alt="trustly">
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="heading-id">
     <div class="heading">
-      <p class="heading-p">Secure your web app with </p>
-      <p class="heading-p">non-intrusive and customizable scans.</p>  
+      <p class="heading-p">Secure your web app with<br>non-intrusive and customizable scans.</p>  
       <p class="heading-text">‘What’s happened to me,’ he thought.
         It was no dream. His room, a proper room for a human being,
         only somewhat too small, lay quietly between the four well-known walls.</p>
@@ -124,8 +128,10 @@
       </div>
       <div class="events-filter-bar">
         <form class="form-inline">
-          <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button id="all" class="btn btn-warning my-2 my-sm-0" type="button">All</button>
+          <div>
+          <input id="search" class="form-control mr-sm-2" type="search" placeholder="&#x1F50D" aria-label="Search">
+        </div>
+          <button id="all" class="btn btn-outline-secondary my-2 my-sm-0 selected" type="button">All</button>
           <button id="online" class="btn btn-outline-secondary my-2 my-sm-0" type="button">Online</button>
           <button id="live" class="btn btn-outline-secondary my-2 my-sm-0" type="button">Live</button>
           <div class="form-group">
@@ -159,27 +165,25 @@
     </div>
   </section>
 
-  <section id="footer-cta-id">
-    <div class="footer-cta">
+  
+    <section class="footer-cta">
+      <div class="blob-img">
+        <img class="footer-cta-img" src="images/blob.png" alt="">
+     </div>
       <div class="text-cta">
         <p class="footer-cta-p">Go hack yourself</p>
         <h2 class="footer-cta-h">Try it out for free</h2>
         <p class="footer-cta-text">Get started in a matter of minutes
         and scan your site as often as you like for 14 days.
         No credit card required, no strings attached.</p>
-      </div>
-       <div class="start-btn-div" > 
+        <div class="start-btn-div" > 
           <button class="start-btn">Start your journey
           <img class="" src="icons/arrow-right_34_white.svg" alt="start your journey"> </i></button>
        </div>
-       <div class="blob-img">
-          <img class="footer-cta-img" src="images/blob.png" alt="">
-       </div>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <section id="footer-id">
-    <div class="footer">
+  <footer id="footer-id">
           <div class="inner-footer">
               <div class="links-footer">
                 <h1>Solutions</h1>
@@ -210,8 +214,10 @@
           <div class="copyright">
             © 2020 detectify | Go hack yourself.
           </div>
-    </div>
-  </section>
+  </footer>
 </body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="app.js"></script>
 </html>
